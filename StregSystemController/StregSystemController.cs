@@ -2,7 +2,7 @@
 
 namespace StregSystemController
 {
-    public class Class1
+    public class StregSystemController
     {
     }
 }
