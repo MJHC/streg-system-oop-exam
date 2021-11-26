@@ -8,6 +8,9 @@ namespace StregSystemCore
 {
     public class StregSystem : IStregSystem
     {
+        private List<ITransaction> _transactions;
+        private List<Product> _products;
+        private List<User> _users;
         public IEnumerable<Product> ActiveProducts => throw new NotImplementedException();
 
         public InsertCashTransaction AddCreditsToAccount(User user, int amount)
