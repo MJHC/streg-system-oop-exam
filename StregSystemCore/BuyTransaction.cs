@@ -4,10 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StregSystemCore
+namespace StregSystem.Core
 {
     public class BuyTransaction : Transaction, ITransaction
     {
+        public BuyTransaction(int id, User user, decimal amount) : base(id, user, amount)
+        {
+
+        }
+
         // Remember Transaction Type
         public override string ToString()
         {
@@ -16,10 +21,23 @@ namespace StregSystemCore
 
         public void Execute()
         {
-            throw new NotImplementedException();
+            if (!(User.Balance >= Amount))
+            {
+                throw new InsufficientCreditsException($"{User.Username} does not have sufficient credits");
+            }
+
+            User.Balance -=Amount;
         }
 
         // InsufficientCreditsException
         // Diverse Exceptions
+    }
+
+    class InsufficientCreditsException : Exception
+    {
+        public InsufficientCreditsException (string message) : base (message)
+        {
+
+        }
     }
 }

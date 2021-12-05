@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StregSystemCore
+namespace StregSystem.Core
 {
+    public delegate void UserBalanceNotification(User user);
     public interface IStregSystem
     {
         IEnumerable<Product> ActiveProducts { get; }
@@ -15,7 +16,8 @@ namespace StregSystemCore
         IEnumerable<Transaction> GetTransactions(User user, int count);
         IEnumerable<Transaction> GetTransactions(User user);
         User GetUserByUsername(string username);
-        //User GetUsers(Func<User, bool> predicate);
-        //event UserBalanceNotification UserBalanceWarning
+        IEnumerable<User> GetUsers(Func<User, bool> predicate);
+        void ExecuteTransaction(Transaction transaction);
+        event UserBalanceNotification UserBalanceWarning;
     }
 }

@@ -4,10 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StregSystemCore
+namespace StregSystem.Core
 {
     public class InsertCashTransaction : Transaction, ITransaction
     {
+        public InsertCashTransaction(int id, User user, decimal amount) : base(id, user, amount)
+        {
+
+        }
+
         // Remember Transaction Type
         public override string ToString()
         {
@@ -16,7 +21,7 @@ namespace StregSystemCore
 
         public void Execute()
         {
-            throw new NotImplementedException();
+            User.Balance += Amount;
         }
     }
 }

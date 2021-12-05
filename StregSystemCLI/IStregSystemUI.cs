@@ -1,11 +1,11 @@
-﻿using StregSystemCore;
+﻿using StregSystem.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StregSystemCLI
+namespace StregSystem.CLI
 {
     public interface IStregSystemUI
     {
@@ -19,6 +19,7 @@ namespace StregSystemCLI
         void Close(); 
         void DisplayInsufficientCash(User user, Product product); 
         void DisplayGeneralError(string errorString); 
-        //void Start(); event StregsystemEvent CommandEntered;
+        void Start(); 
+        //event StregSystemEvent CommandEntered;
     }
 }

@@ -4,18 +4,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StregSystemCore
+namespace StregSystem.Core
 {
     public abstract class Transaction
     {
         public int ID { get; set; }
         public User User { get; set; }
         public DateTime Date { get; set; }
-        public int Amount { get; set; }
+        public decimal Amount { get; set; }
 
-        public Transaction()
+        public Transaction(int id, User user, decimal amount)
         {
-
+            ID = id;
+            User = user;
+            Amount = amount;
+            Date = DateTime.Now;
         }
     }
 }

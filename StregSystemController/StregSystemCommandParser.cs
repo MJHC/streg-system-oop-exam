@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StregSystemController
+namespace StregSystem.Controller
 {
     public class StregSystemCommandParser
     {

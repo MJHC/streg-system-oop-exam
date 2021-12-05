@@ -5,11 +5,11 @@ VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StregSystem", "stregsystem\StregSystem.csproj", "{0D742D05-6E05-419B-8CF9-5631F0E9505D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StregSystemCLI", "StregSystemCLI\StregSystemCLI.csproj", "{5B9BF949-A31F-4FF3-B2E4-F02FC5A2E8A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StregSystem.CLI", "StregSystemCLI\StregSystem.CLI.csproj", "{5B9BF949-A31F-4FF3-B2E4-F02FC5A2E8A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StregSystemCore", "StregSystemCore\StregSystemCore.csproj", "{A69DEE69-6759-40E2-8943-9541115E0B3A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StregSystem.Core", "StregSystemCore\StregSystem.Core.csproj", "{A69DEE69-6759-40E2-8943-9541115E0B3A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StregSystemController", "StregSystemController\StregSystemController.csproj", "{67700A6D-6D56-4770-8FA9-C2A90145379F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StregSystem.Controller", "StregSystemController\StregSystem.Controller.csproj", "{67700A6D-6D56-4770-8FA9-C2A90145379F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

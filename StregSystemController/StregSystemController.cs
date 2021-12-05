@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace StregSystemController
+namespace StregSystem.Controller
 {
     public class StregSystemController
     {

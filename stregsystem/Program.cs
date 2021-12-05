@@ -1,4 +1,5 @@
 ﻿using System;
+using StregSystem.Core;
 
 namespace StregSystem
 {
@@ -6,7 +7,9 @@ namespace StregSystem
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            IStregSystem stregSystem = new Core.StregSystem();
+            foreach(User user in stregSystem.GetUsers(user => user != null))
+                Console.WriteLine(user.ToString());
         }
     }
 }

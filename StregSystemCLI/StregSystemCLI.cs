@@ -1,7 +1,7 @@
-﻿using StregSystemCore;
+﻿using StregSystem.Core;
 using System;
 
-namespace StregSystemCLI
+namespace StregSystem.CLI
 {
     public class StregSystemCLI : IStregSystemUI
     {
@@ -51,6 +51,11 @@ namespace StregSystemCLI
         }
 
         public void DisplayUserNotFound(string username)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Start()
         {
             throw new NotImplementedException();
         }
