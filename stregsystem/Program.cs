@@ -1,4 +1,6 @@
 ﻿using System;
+using StregSystem.CLI;
+using StregSystem.Controller;
 using StregSystem.Core;
 
 namespace StregSystem
@@ -8,8 +10,8 @@ namespace StregSystem
         static void Main(string[] args)
         {
             IStregSystem stregSystem = new Core.StregSystem();
-            foreach(User user in stregSystem.GetUsers(user => user != null))
-                Console.WriteLine(user.ToString());
+            IStregSystemUI ui = new StregSystemCLI(stregSystem);
+            StregSystemController controller = new StregSystemController(stregSystem, ui);
         }
     }
 }

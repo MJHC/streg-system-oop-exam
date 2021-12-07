@@ -19,7 +19,8 @@ namespace StregSystem.CLI
         void Close(); 
         void DisplayInsufficientCash(User user, Product product); 
         void DisplayGeneralError(string errorString); 
-        void Start(); 
+        void Start();
+        void ClearInputField();
         //event StregSystemEvent CommandEntered;
     }
 }

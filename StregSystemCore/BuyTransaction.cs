@@ -10,7 +10,6 @@ namespace StregSystem.Core
     {
         public BuyTransaction(int id, User user, decimal amount) : base(id, user, amount)
         {
-
         }
 
         // Remember Transaction Type

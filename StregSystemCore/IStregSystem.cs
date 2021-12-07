@@ -17,6 +17,7 @@ namespace StregSystem.Core
         IEnumerable<Transaction> GetTransactions(User user);
         User GetUserByUsername(string username);
         IEnumerable<User> GetUsers(Func<User, bool> predicate);
+        IEnumerable<Product> GetProducts(Func<Product, bool> predicate);
         void ExecuteTransaction(Transaction transaction);
         event UserBalanceNotification UserBalanceWarning;
     }

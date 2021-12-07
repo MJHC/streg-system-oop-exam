@@ -1,11 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\StregSystemCLI\StregSystem.CLI.csproj" />
+    <ProjectReference Include="..\StregSystemController\StregSystem.Controller.csproj" />
     <ProjectReference Include="..\StregSystemCore\StregSystem.Core.csproj" />
   </ItemGroup>
 

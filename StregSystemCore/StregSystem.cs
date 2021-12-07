@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,8 +9,8 @@ namespace StregSystem.Core
 {
     public class StregSystem : IStregSystem
     {
-        private List<Product> _products = new();
-        private List<User> _users = new();
+        private List<Product> _products;
+        private List<User> _users;
         private List<Transaction> _transactions = new();
         public IEnumerable<Product> ActiveProducts {
             get 
@@ -22,26 +23,9 @@ namespace StregSystem.Core
 
         public StregSystem()
         {
-            ReadUsers();
-        }
-
-        private void ReadUsers()
-        {
-            string[] csv = Properties.Resources.users.Split("\n");
-            foreach(string line in csv)
-            {
-                if (line == csv[0]) continue;
-                string[] values = line.Split(",");
-                if (values.Length > 1)
-                {
-                    _users.Add(new User(int.Parse(values[0]), values[1], values[2], values[3], decimal.Parse(values[4]), values[5]));
-                }
-            }
-        }
-
-        private void ReadProducts()
-        {
-
+            DataReader reader = new DataReader();
+            _users = reader.ReadUsers();
+            _products = reader.ReadProducts();
         }
 
         public InsertCashTransaction AddCreditsToAccount(User user, int amount)
@@ -59,6 +43,7 @@ namespace StregSystem.Core
             try
             {
                 ((ITransaction)transaction).Execute();
+                LogTransaction(transaction);
 
                 if(transaction.User.Balance <= 50)
                 {
@@ -71,6 +56,11 @@ namespace StregSystem.Core
             {
                 Console.WriteLine(ex.Message);
             }
+        }
+
+        private void LogTransaction(Transaction transaction)
+        {
+            File.AppendAllText(@"C:\stregsystemlog.txt", transaction.ToString() + Environment.NewLine);
         }
 
         public Product GetProductByID(int id)
@@ -96,6 +86,11 @@ namespace StregSystem.Core
         public IEnumerable<User> GetUsers(Func<User, bool> predicate)
         {
             return _users.Where(predicate);
+        }
+
+        public IEnumerable<Product> GetProducts(Func<Product, bool> predicate)
+        {
+            return _products.Where(predicate);
         }
     }
 }

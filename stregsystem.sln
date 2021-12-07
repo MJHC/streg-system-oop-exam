@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StregSystem.Core", "StregSy
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StregSystem.Controller", "StregSystemController\StregSystem.Controller.csproj", "{67700A6D-6D56-4770-8FA9-C2A90145379F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StregSystem.Test", "StregSystem.Test\StregSystem.Test.csproj", "{161BAE62-316A-41CF-8CC4-21F3ECF9EF63}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{67700A6D-6D56-4770-8FA9-C2A90145379F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{67700A6D-6D56-4770-8FA9-C2A90145379F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{67700A6D-6D56-4770-8FA9-C2A90145379F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{161BAE62-316A-41CF-8CC4-21F3ECF9EF63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{161BAE62-316A-41CF-8CC4-21F3ECF9EF63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{161BAE62-316A-41CF-8CC4-21F3ECF9EF63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{161BAE62-316A-41CF-8CC4-21F3ECF9EF63}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -9,7 +9,8 @@ namespace StregSystem.Controller
     public class StregSystemCommandParser
     {
         //private Dictionary<string, command>  _adminCommands;
-        private void ParseCommand(string command)
+
+        public void ParseCommand(string command)
         {
 
         }
