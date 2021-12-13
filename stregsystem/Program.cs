@@ -12,6 +12,7 @@ namespace StregSystem
             IStregSystem stregSystem = new Core.StregSystem();
             IStregSystemUI ui = new StregSystemCLI(stregSystem);
             StregSystemController controller = new StregSystemController(stregSystem, ui);
+            ui.Start();
         }
     }
 }

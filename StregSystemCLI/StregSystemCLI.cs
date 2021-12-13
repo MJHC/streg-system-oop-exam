@@ -8,6 +8,8 @@ namespace StregSystem.CLI
         private IStregSystem _stregSystem;
         private int ActiveProducts;
 
+        public event StregSystemEvent CommandEntered;
+
         public StregSystemCLI (IStregSystem stregSystem)
         {
             _stregSystem = stregSystem;
@@ -24,11 +26,10 @@ namespace StregSystem.CLI
                 Console.WriteLine(product.ToString());
                 ActiveProducts++;
             }
-
-            ClearInputField();
         }
         public void Close()
         {
+            running = false;
             Console.Clear();
             Console.WriteLine("StregSystem has been closed!");
         }
@@ -86,11 +87,17 @@ namespace StregSystem.CLI
             Console.SetCursorPosition(0, ActiveProducts + 5);
         }
 
-        public void ClearInputField()
+        public void GetUserCommand()
         {
             Console.SetCursorPosition(0, ActiveProducts + 5);
             Console.Write("\r" + new string(' ', Console.WindowWidth) + "\r");
             Console.Write("Command>");
+            CommandEntered.Invoke(IsolateInput(Console.ReadLine()));
+        }
+
+        private string IsolateInput(string input)
+        {
+            return input.Remove(0, 8);
         }
     }
 }

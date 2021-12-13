@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace StregSystem.CLI
 {
+    public delegate void StregSystemEvent(string command);
     public interface IStregSystemUI
     {
         void DisplayUserNotFound(string username); 
@@ -20,7 +21,7 @@ namespace StregSystem.CLI
         void DisplayInsufficientCash(User user, Product product); 
         void DisplayGeneralError(string errorString); 
         void Start();
-        void ClearInputField();
-        //event StregSystemEvent CommandEntered;
+        void GetUserCommand();
+        event StregSystemEvent CommandEntered;
     }
 }

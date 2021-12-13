@@ -9,25 +9,19 @@ namespace StregSystem.Controller
         private IStregSystem _stregSystem;
         private IStregSystemUI _ui;
 
-        private StregSystemCommandParser _parser = new StregSystemCommandParser();
-
         public StregSystemController(IStregSystem stregSystem, IStregSystemUI ui)
         {
             _stregSystem = stregSystem;
             _ui = ui;
-            ui.Start();
 
-            ReadLine();
+            _ui.CommandEntered += ParseCommand;
+
+            _ui.GetUserCommand();
         }
 
-        private void ReadLine()
+        private void ParseCommand(string command)
         {
-            while (true)
-            {
-                _parser.ParseCommand(Console.ReadLine());
-                _ui.ClearInputField();
-            }
+            Console.WriteLine(command);
         }
-
     }
 }
