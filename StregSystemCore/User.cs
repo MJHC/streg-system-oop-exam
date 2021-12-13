@@ -23,7 +23,7 @@ namespace StregSystem.Core
 
         public override string ToString()
         {
-            return $"{Firstname} {Lastname} {Username} {Balance} {Email}";
+            return $"{Firstname} {Lastname} {Username} {Email} Balance: {Balance}";
         }
 
         public override bool Equals(object obj)

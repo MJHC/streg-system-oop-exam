@@ -6,7 +6,6 @@ namespace StregSystem.CLI
     public class StregSystemCLI : IStregSystemUI
     {
         private IStregSystem _stregSystem;
-        private int ActiveProducts;
 
         public event StregSystemEvent CommandEntered;
 
@@ -17,87 +16,84 @@ namespace StregSystem.CLI
 
         public void Start()
         {
-            Console.WriteLine("TREONs STREGSYSTEM : Jægerstuen");
-
-            Console.SetCursorPosition(0, 4);
-
-            foreach (Product product in _stregSystem.GetProducts(p => p.Active))
-            {
-                Console.WriteLine(product.ToString());
-                ActiveProducts++;
-            }
+            DisplayProducts();
+            GetUserCommand();
         }
         public void Close()
         {
-            running = false;
             Console.Clear();
             Console.WriteLine("StregSystem has been closed!");
         }
 
-        public void DisplayAdminCommandNotFoundMessage(string adminCommand)
+        public void DisplayProducts()
         {
-            WriteInfoMessage($"Admin command: \"{adminCommand}\" not found!");
+            foreach (Product product in _stregSystem.ActiveProducts)
+            {
+                Console.WriteLine(product.ToString());
+            }
         }
-
-        public void DisplayGeneralError(string errorString)
+        public void DisplayUserInfo(User user)
         {
-            WriteInfoMessage(errorString);
-        }
+            InfoMessage($"User Info: {user}");
 
-        public void DisplayInsufficientCash(User user, Product product)
-        {
-            WriteInfoMessage($"{user.Username} has insufficient credit to buy {product.Name}");
-        }
+            if(user.Balance < 50)
+                InfoMessage("You have less than 50 streg dollars!");
 
-        public void DisplayProductNotFound(string product)
-        {
-            WriteInfoMessage($"{product} not found!");
-        }
+            Console.WriteLine();
 
-        public void DisplayTooManyArgumentsError(string command)
-        {
-            WriteInfoMessage($"{command} had too many arguments!");
+            foreach (Transaction transaction in _stregSystem.GetTransactions(user, 10))
+            {
+                InfoMessage(transaction.ToString());
+            }
+
+            Console.WriteLine();
         }
 
         public void DisplayUserBuysProduct(BuyTransaction transaction)
         {
-            WriteInfoMessage($"{transaction.User.Username} has bought 1 product for {transaction.Amount} kr.");
+            SuccessMessage($"{transaction.User.Username} has bought 1 product for {transaction.Amount} kr.");
         }
 
         public void DisplayUserBuysProduct(int count, BuyTransaction transaction)
         {
-            WriteInfoMessage($"{transaction.User.Username} has bought {count} products for {transaction.Amount} kr.");
+            SuccessMessage($"{transaction.User.Username} has bought {count} products for {transaction.Amount} kr.");
         }
 
-        public void DisplayUserInfo(User user)
+        public void DisplayInsufficientCash(User user, Product product)
         {
-            WriteInfoMessage($"User Info: {user}");
+            ErrorMessage($"{user.Username} has insufficient credit to buy {product.Name}");
         }
 
-        public void DisplayUserNotFound(string username)
+        public void DisplayGeneralError(string errorString)
         {
-            WriteInfoMessage($"User {username} not found!");
+            ErrorMessage(errorString);
         }
 
-        private void WriteInfoMessage(string infoMessage)
+        private void SuccessMessage(string infoMessage)
         {
-            Console.SetCursorPosition(0, 2);
-            Console.Write("\r" + new string(' ', Console.WindowWidth) + "\r");
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine(infoMessage);
-            Console.SetCursorPosition(0, ActiveProducts + 5);
+            Console.ResetColor();
+        }
+
+        private void InfoMessage(string warningMessage)
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine(warningMessage);
+            Console.ResetColor();
+        }
+
+        private void ErrorMessage(string errorMessage)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(errorMessage);
+            Console.ResetColor();
         }
 
         public void GetUserCommand()
         {
-            Console.SetCursorPosition(0, ActiveProducts + 5);
-            Console.Write("\r" + new string(' ', Console.WindowWidth) + "\r");
             Console.Write("Command>");
-            CommandEntered.Invoke(IsolateInput(Console.ReadLine()));
-        }
-
-        private string IsolateInput(string input)
-        {
-            return input.Remove(0, 8);
+            CommandEntered.Invoke(Console.ReadLine());
         }
     }
 }

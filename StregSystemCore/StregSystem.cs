@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StregSystem.Core.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -23,7 +24,7 @@ namespace StregSystem.Core
 
         public StregSystem()
         {
-            DataReader reader = new DataReader();
+            IDataReader reader = new DataReader();
             _users = reader.ReadUsers();
             _products = reader.ReadProducts();
         }
@@ -40,47 +41,48 @@ namespace StregSystem.Core
 
         public void ExecuteTransaction(Transaction transaction)
         {
-            try
-            {
-                ((ITransaction)transaction).Execute();
-                LogTransaction(transaction);
+            ((ITransaction)transaction).Execute();
+            LogTransaction(transaction);
 
-                if(transaction.User.Balance <= 50)
-                {
-                    UserBalanceWarning.Invoke(transaction.User);
-                }
-
-                _transactions.Add(transaction);
-            } 
-            catch (InsufficientCreditsException ex)
+            if(transaction.User.Balance <= 50)
             {
-                Console.WriteLine(ex.Message);
+                UserBalanceWarning.Invoke(transaction.User);
             }
+
+            _transactions.Add(transaction);
         }
 
         private void LogTransaction(Transaction transaction)
         {
-            File.AppendAllText(@"C:\stregsystemlog.txt", transaction.ToString() + Environment.NewLine);
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+
+            File.AppendAllText(Path.Combine(path, "log.txt"), transaction.ToString() + Environment.NewLine);
         }
 
         public Product GetProductByID(int id)
         {
-            return _products.Find(p => p.ID == id);
+            Product p = _products.Find(p => p.ID == id && p.Active);
+            if (p == null)
+                throw new ProductNotFoundException($"Product ID: {id} not found!");
+            return p;
         }
 
         public IEnumerable<Transaction> GetTransactions(User user, int count)
         {
-            return _transactions.OrderBy(t => t.Date).Where(t => t.User == user);
+            return _transactions.OrderBy(t => t.Date).Where(t => t.User == user).Take(count);
         }
 
         public IEnumerable<Transaction> GetTransactions(User user)
         {
-            return _transactions.Where(t => t.User == user);
+            return _transactions.OrderBy(t => t.Date).Where(t => t.User == user);
         }
 
         public User GetUserByUsername(string username)
         {
-            return _users.Find(u => u.Username == username);
+            User u = _users.Find(u => u.Username == username);
+            if (u == null)
+                throw new UserNotFoundException($"User: {username} not found!");
+            return u;
         }
 
         public IEnumerable<User> GetUsers(Func<User, bool> predicate)

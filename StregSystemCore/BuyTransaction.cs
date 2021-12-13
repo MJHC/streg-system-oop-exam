@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,21 +21,10 @@ namespace StregSystem.Core
         {
             if (!(User.Balance >= Amount))
             {
-                throw new InsufficientCreditsException($"{User.Username} does not have sufficient credits");
+                throw new InsufficientCreditsException($"{User.Username} does not have sufficient credits!");
             }
 
             User.Balance -=Amount;
-        }
-
-        // InsufficientCreditsException
-        // Diverse Exceptions
-    }
-
-    class InsufficientCreditsException : Exception
-    {
-        public InsufficientCreditsException (string message) : base (message)
-        {
-
         }
     }
 }
