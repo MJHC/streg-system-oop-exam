@@ -26,30 +26,35 @@ namespace StregSystem.Controller
             _adminCommands.Add(":q", (args) => _ui.Close());
 
             _adminCommands.Add(":activate", (args) => {
+                CheckArgs(args);
                 int id = CommandParser.ConvertToInt(args[0]);
                 _stregSystem.GetProductByID(id).Active = true;
                 _ui.DisplayGeneralSuccess($"Product: {args[0]} has been activated!");
             });
 
             _adminCommands.Add(":deactivate", (args) => {
+                CheckArgs(args);
                 int id = CommandParser.ConvertToInt(args[0]);
                 _stregSystem.GetProductByID(id).Active = false;
                 _ui.DisplayGeneralSuccess($"Product: {args[0]} has been deactivated!");
             });
 
             _adminCommands.Add(":crediton", (args) => {
+                CheckArgs(args);
                 int id = CommandParser.ConvertToInt(args[0]);
                 _stregSystem.GetProductByID(id).CanBeBoughtOnCredit = true;
                 _ui.DisplayGeneralSuccess($"Product: {args[0]} buy on credit has been activated!");
             });
 
             _adminCommands.Add(":creditoff", (args) => {
+                CheckArgs(args);
                 int id = CommandParser.ConvertToInt(args[0]);
                 _stregSystem.GetProductByID(id).CanBeBoughtOnCredit = false;
                 _ui.DisplayGeneralSuccess($"Product: {args[0]} buy on credit has been deactivated!");
             });
 
             _adminCommands.Add(":addcredits", (args) => {
+                CheckArgs(args);
                 User user = _stregSystem.GetUserByUsername(args[0]);
                 int amount = CommandParser.ConvertToInt(args[1]);
 
@@ -66,6 +71,12 @@ namespace StregSystem.Controller
             if (!commandExists)
                 throw new AdminCommandException($"Command: {args[0]} does not exist!");
             method(args[1..]);
+        }
+
+        private void CheckArgs(string[] args)
+        {
+            if (args.Length == 0)
+                throw new ArgumentException("Arguments cannot be null");
         }
     }
 }
