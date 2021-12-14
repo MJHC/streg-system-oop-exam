@@ -7,8 +7,10 @@ namespace StregSystem.Core
 {
     public class BuyTransaction : Transaction, ITransaction
     {
-        public BuyTransaction(int id, User user, decimal amount) : base(id, user, amount)
+        public Product Product { get; private set; }
+        public BuyTransaction(int id, User user, Product product, decimal amount) : base(id, user, amount)
         {
+            Product = product;
         }
 
         // Remember Transaction Type
@@ -19,7 +21,7 @@ namespace StregSystem.Core
 
         public void Execute()
         {
-            if (!(User.Balance >= Amount))
+            if (User.Balance < Amount && !Product.CanBeBoughtOnCredit)
             {
                 throw new InsufficientCreditsException($"{User.Username} does not have sufficient credits!");
             }

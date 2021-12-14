@@ -16,27 +16,30 @@ namespace StregSystem.Core
         public IEnumerable<Product> ActiveProducts {
             get 
             {
-                return _products.Where(p => p.Active);
+                DateTime now = DateTime.Now;
+                return _products.Where(p => 
+                 p.Active && p is not SeasonalProduct || 
+                (p is SeasonalProduct sp && sp.Active &&
+                  now >= sp.SeasonStartDate  && now <= sp.SeasonEndDate));
             }
         }
 
         public event UserBalanceNotification UserBalanceWarning;
 
-        public StregSystem()
+        public StregSystem(IDataReader reader)
         {
-            IDataReader reader = new DataReader();
             _users = reader.ReadUsers();
             _products = reader.ReadProducts();
         }
 
-        public InsertCashTransaction AddCreditsToAccount(User user, int amount)
+        public InsertCashTransaction AddCreditsToAccount(User user, decimal amount)
         {
             return new InsertCashTransaction(_transactions.Count, user, amount);
         }
 
         public BuyTransaction BuyProduct(User user, Product product)
         {
-            return new BuyTransaction(_transactions.Count, user, product.Price);
+            return new BuyTransaction(_transactions.Count, user, product, product.Price);
         }
 
         public void ExecuteTransaction(Transaction transaction)
@@ -44,7 +47,7 @@ namespace StregSystem.Core
             ((ITransaction)transaction).Execute();
             LogTransaction(transaction);
 
-            if(transaction.User.Balance <= 50)
+            if(transaction.User.Balance < 50)
             {
                 UserBalanceWarning.Invoke(transaction.User);
             }
@@ -61,7 +64,7 @@ namespace StregSystem.Core
 
         public Product GetProductByID(int id)
         {
-            Product p = _products.Find(p => p.ID == id && p.Active);
+            Product p = _products.Find(p => p.ID == id);
             if (p == null)
                 throw new ProductNotFoundException($"Product ID: {id} not found!");
             return p;

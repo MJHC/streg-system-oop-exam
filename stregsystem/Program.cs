@@ -9,7 +9,7 @@ namespace StregSystem
     {
         static void Main(string[] args)
         {
-            IStregSystem stregSystem = new Core.StregSystem();
+            IStregSystem stregSystem = new Core.StregSystem(new DataReader());
             IStregSystemUI ui = new StregSystemCLI(stregSystem);
             StregSystemController controller = new StregSystemController(stregSystem, ui);
             ui.Start();
